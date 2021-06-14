@@ -1,59 +1,43 @@
-<div class="moviesPage">
-    <div class="navbar">
+<div class="moviesPage" [ngClass]="checked ? 'dark': 'light'">
+    <div class="navbar" [ngClass]="checked ? 'dark': 'light'">
         <div class="container">
-            <button type="submit" class="backButton" mat-stroked-button (click)="backToLogin()">Back To Login</button>
+            <button [ngClass]="checked ? 'dark': 'light'" type="submit" class="backButton" mat-stroked-button
+                (click)="backToLogin()">Back To Login</button>
         </div>
-        <div class="search"> <input class="searchBar"  (keyup)="searchTerm$.next($event.target['value'])"
-                placeholder="Ex: Mind Hunter" aria-label="Search" name="search">
+        <mat-slide-toggle class="slider" [color]="color" [ngClass]="checked ? 'dark': 'light'" class="example-margin"
+            [checked]="checked" (change)="toggleChange($event)">
+            Dark Mode
+        </mat-slide-toggle>
+        <div class="search"> <input [ngClass]="checked ? 'dark': 'light'" class="searchBar"
+                (keyup)="searchTerm$.next($event.target['value'])" placeholder="Ex: Mind Hunter" aria-label="Search"
+                name="search">
         </div>
-        <mat-paginator class="paginationArea" [length]="count" [pageSize]="pageSize" (page)="handlePageEvent($event)">
+        <mat-paginator [ngClass]="checked ? 'dark': 'light'" class="paginationArea" [length]="count"
+            [pageSize]="pageSize" (page)="handlePageEvent($event)">
         </mat-paginator>
     </div>
-    <div class="movieArea">
+    <div class="movieArea" [ngClass]="checked ? 'dark': 'light'">
         <div class="main">
             <ul class="cards">
                 <li class="cards_item" *ngFor="let movie of movieList">
                     <div class="card">
                         <div class="card_content">
                             <div class="card-details">
-                                <div  class="card_image"><img class="movieImage"
+                                <div class="card_image"><img class="movieImage"
                                         src="https://ui-avatars.com/api/?name={{movie.title}}">
                                 </div>
                                 <div>
-                                    <h2 class="card_title">{{movie.title}}</h2>
-                                    <div class="card_genre">{{movie.genres}}</div>
+                                    <h2 class="card_title" [ngClass]="checked ? 'dark': 'light'">{{movie.title}}</h2>
+                                    <div class="card_genre" [ngClass]="checked ? 'dark': 'light'">{{movie.genres}}</div>
                                 </div>
 
                             </div>
-                            <p class="card_text">{{movie.description|description}}</p>
-                            <button class="btn card_btn" type="button" (click)="goToDetails(movie)" >Know More</button>
+                            <p class="card_text" [ngClass]="checked ? 'dark': 'light'">{{movie.description|description}}
+                            </p>
+                            <button class="btn card_btn" [ngClass]="checked ? 'dark': 'light'" type="button"
+                                (click)="goToDetails(movie)">Know More</button>
                         </div>
                     </div>
-                    <!-- <div class="movie_card" id="bright">
-                        <div class="info_section">
-                            <div class="movie_header">
-                                <img class="movieImage" src="https://ui-avatars.com/api/?name={{movie.title}}">
-                                <div>
-                                    <h1>{{movie.title}}</h1>
-                                    <h4>{{movie.genres}}</h4>
-                                </div>
-
-                            </div>
-                            <div class="movie_desc">
-                                <p class="text">
-                                    {{movie.description|description}}
-                                </p>
-                            </div>
-                            <div class="movie_social">
-                                <ul>
-                                    <li><i class="material-icons">share</i></li>
-                                    <li><i class="material-icons"></i></li>
-                                    <li><i class="material-icons">chat_bubble</i></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> -->
-
                 </li>
                 <div class="no-data" *ngIf="movieList.length===0">No data Available</div>
             </ul>

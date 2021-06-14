@@ -8,13 +8,15 @@ import { Subject } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { trigger, state, style, transition, animate, query, stagger } from '@angular/animations';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import { ThemePalette } from '@angular/material/core';
 
 
 @Component({
   selector: 'app-movies',
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.scss'],
- 
+
 })
 export class MoviesComponent implements OnInit {
   movies: any;
@@ -27,7 +29,10 @@ export class MoviesComponent implements OnInit {
   token: any;
   url: string = ''
   originalMovieList = [];
-  lastSearch: string = ''
+  lastSearch: string = '';
+  theme = 'dark';
+  checked: boolean;
+  color: ThemePalette = 'accent';
   private unsubscribe$ = new Subject<void>();
   searchTerm$ = new Subject<string>();
   constructor(private apiService: ApiService,
@@ -37,11 +42,24 @@ export class MoviesComponent implements OnInit {
 
 
   ngOnInit() {
+    this.applyTheme();
     this.searchFunction();
     this.getToken();
     this.getInitialListofMovies();
     this.getRetrigggerState();
 
+  }
+  applyTheme() {
+    if (sessionStorage && sessionStorage.getItem('theme')) {
+      this.theme = sessionStorage.getItem('theme')
+
+    }
+    else {
+      this.theme = 'dark'
+
+    }
+    sessionStorage.setItem('theme', this.checked ? 'dark' : 'light')
+    this.checked = this.theme == 'dark' ? true : false;
   }
   searchFunction() {
     this.searchTerm$
@@ -125,36 +143,52 @@ export class MoviesComponent implements OnInit {
     this.dialog.open(ModelComponent, {
       data: movie
     });
-}
-handlePageEvent(event) {
-  console.log(event)
-  if (event.previousPageIndex > event.pageIndex) {
-    this.url = this.previous;
   }
-  else if (event.previousPageIndex < event.pageIndex) {
-    this.url = this.next
-  }
-  if (this.movieList.length < this.count) {
+  handlePageEvent(event) {
+    console.log(event)
+    if (event.previousPageIndex > event.pageIndex) {
+      this.url = this.previous;
+    }
+    else if (event.previousPageIndex < event.pageIndex) {
+      this.url = this.next
+    }
+    if (this.movieList.length < this.count) {
 
-    this.triggerMovieApi()
+      this.triggerMovieApi()
 
+    }
   }
-}
-triggerMovieApi() {
-  this.apiService.movieList(this.token, this.url).pipe(takeUntil(this.unsubscribe$))
-    .subscribe((response: any) => {
-      if (response) {
-        this.prepareData(response)
-      }
-    }, (error: any) => {
-      console.error(error)
-    });
-}
-backToLogin() {
-  this.router.navigate(['/login'])
-}
-ngOnDestroy() {
-  this.unsubscribe$.next();
-  this.unsubscribe$.unsubscribe();
-}
+  triggerMovieApi() {
+    this.apiService.movieList(this.token, this.url).pipe(takeUntil(this.unsubscribe$))
+      .subscribe((response: any) => {
+        if (response) {
+          this.prepareData(response)
+        }
+      }, (error: any) => {
+        console.error(error)
+      });
+  }
+  backToLogin() {
+    this.router.navigate(['/login'])
+  }
+  toggleChange(event) {
+    console.log(event);
+    this.checked = event.checked
+    if (this.checked) {
+      this.color = 'accent'
+    }
+    else {
+      this.color = 'primary'
+    }
+    sessionStorage.setItem('theme', this.checked ? 'dark' : 'light')
+  }
+  // onSetTheme(theme) {
+  //   this.overlayContainer.getContainerElement().classList.add(theme);
+  //   this.componentCssClass = theme;
+  // }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.unsubscribe();
+  }
 }

@@ -22,6 +22,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { ErrorDisplayComponent } from './error-display/error-display.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -47,8 +49,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatCardModule,
     MatGridListModule,
     MatTooltipModule,
-    MatDialogModule
-    
+    MatDialogModule,
+    MatSlideToggleModule,
+    OverlayModule
   ],
   providers: [ApiService,AuthGuard, {
     provide: HTTP_INTERCEPTORS,
