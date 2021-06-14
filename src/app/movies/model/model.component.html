@@ -1,0 +1,20 @@
+<div class="modal">
+    <div class="imageArea">
+        <img class="movieImage" src="https://ui-avatars.com/api/?name={{movie.title}}">
+    </div>
+    <div class="name area">
+        <label class="label">Title</label>
+        <span class="colon">:</span>
+        <div class="value">&nbsp;{{movie.title}}</div>
+    </div>
+    <div class="genre area">
+        <label class="label">Genre</label>
+        <span class="colon">:</span>
+        <div class="value">&nbsp;{{movie.genres?movie.genres:' -'}}</div>
+    </div>
+    <div class="desc area">
+        <label class="label">Description</label>
+        <span class="colon">:</span>
+        <div class="value">&nbsp;{{movie.description}}</div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="bg">
+    <div class="box">
+        <h1>MOVIE PORTAL</h1>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <input class="inp user" type="text" placeholder="User name" formControlName="userName">
+            <div class="errfield"
+                *ngIf="loginForm.controls.userName&&loginForm.controls.userName.status=='INVALID' && loginForm.controls.userName.touched">
+                <span class="image_display">
+                    <span class="msg_display">{{ getErrorMessage(loginForm.controls.userName,'UserName')}}</span>
+                </span>
+            </div>
+            <input class="inp" type="password" placeholder="Password" formControlName="passWord">
+            <div class="errfield"
+                *ngIf="loginForm.controls.passWord&&loginForm.controls.passWord.status=='INVALID' && loginForm.controls.passWord.touched">
+                <span class="image_display">
+                    <span class="msg_display">{{ getErrorMessage(loginForm.controls.passWord,'Pasword')}}</span>
+                </span>
+            </div>
+            <hr style="border-color: rgba(0,0,0, 0)">
+            ruDWLeHr9K7ErsUS
+            <button type="submit" id="button" name="btn_submit" class="btn"
+                [ngClass]="!loginForm.valid?'disabled':'enabled'" [disabled]="!loginForm.valid&&!isAPI">
+                <span>Login</span>
+            </button>
+        </form>
+
+    </div>
+</div>
+<router-outlet></router-outlet>

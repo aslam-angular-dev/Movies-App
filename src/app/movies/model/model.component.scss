@@ -1,0 +1,27 @@
+.area {
+  display: flex;
+}
+
+.modal {
+  width: 470px !important;
+  height: fit-content;
+  border: 1px solid;
+  padding: 30px;
+  color: #ffffff
+}
+
+.value {
+  color: #FFCC66;
+  font-size: 12px;
+}
+
+.label {
+  font-size: 16px;
+  font-weight: 400;
+  color: #00FFFF;
+  width: 17%;
+  padding-right: 10px;
+}
+.imageArea {
+    text-align: center;
+}
